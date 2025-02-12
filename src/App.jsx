@@ -26,6 +26,22 @@ function App() {
       isCompleted: false,
     },
   ]);
+
+  function onTaskClick(taskId) {
+    const newTasks = tasks.map((task) => {
+      //Precisa atualizar tarefa
+      if (task.id == taskId) {
+        return { ...task, isCompleted: !task.isCompleted };
+      }
+      //Não precisa atualizar
+      return task;
+    });
+    setTasks(newTasks);
+  }
+  function onDeleteTaskClick(taskId) {
+    const UpdateTask = tasks.filter((task) => task.id !== taskId);
+    setTasks(UpdateTask);
+  }
   return (
     <div className="w-screen h-screen bg-slate-500 flex justify-center p-6">
       <div className="w-[500px]">
@@ -33,7 +49,11 @@ function App() {
           Gerenciador de tarefas
         </h1>
         <AddTask></AddTask>
-        <Tasks tasks={tasks} />
+        <Tasks
+          tasks={tasks}
+          onTaskClick={onTaskClick} //Sempre atualizar aqui um botão quando tal for criado
+          onDeleteTaskClick={onDeleteTaskClick}
+        />
       </div>
     </div>
   );
